@@ -22,7 +22,7 @@ const DocumentsTablesPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const [filters] = useState([{label: 'Title', title: 'title'},
+  const [filters] = useState([{label: 'Title', title: 'title'},{label: 'Fileurl', title: 'fileurl'},
 
     {label: 'DocumentType', title: 'document_type', type: 'enum', options: ['Checklist','Form','Policy','Procedure','Plan']},
   ]);

@@ -37,6 +37,8 @@ const EditDocumentsPage = () => {
 
     document_type: '',
 
+    'fileurl': '',
+
   }
   const [initialValues, setInitialValues] = useState(initVals)
 
@@ -107,6 +109,15 @@ const EditDocumentsPage = () => {
             <option value="Plan">Plan</option>
 
         </Field>
+    </FormField>
+
+    <FormField
+        label="Fileurl"
+    >
+        <Field
+            name="fileurl"
+            placeholder="Fileurl"
+        />
     </FormField>
 
               <BaseDivider />

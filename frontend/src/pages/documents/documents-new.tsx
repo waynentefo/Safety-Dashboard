@@ -29,6 +29,8 @@ const initialValues = {
 
     document_type: 'Checklist',
 
+    fileurl: '',
+
 }
 
 const DocumentsNew = () => {
@@ -80,6 +82,15 @@ const DocumentsNew = () => {
         <option value="Plan">Plan</option>
 
       </Field>
+  </FormField>
+
+  <FormField
+      label="Fileurl"
+  >
+      <Field
+          name="fileurl"
+          placeholder="Fileurl"
+      />
   </FormField>
 
               <BaseDivider />

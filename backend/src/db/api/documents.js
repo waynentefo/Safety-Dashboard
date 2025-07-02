@@ -26,6 +26,11 @@ module.exports = class DocumentsDBApi {
         null
             ,
 
+        fileurl: data.fileurl
+        ||
+        null
+            ,
+
             importHash: data.importHash || null,
             createdById: currentUser.id,
             updatedById: currentUser.id,
@@ -54,6 +59,11 @@ module.exports = class DocumentsDBApi {
             null
             ,
 
+                fileurl: item.fileurl
+            ||
+            null
+            ,
+
             importHash: item.importHash || null,
             createdById: currentUser.id,
             updatedById: currentUser.id,
@@ -77,6 +87,8 @@ module.exports = class DocumentsDBApi {
         if (data.title !== undefined) updatePayload.title = data.title;
 
         if (data.document_type !== undefined) updatePayload.document_type = data.document_type;
+
+        if (data.fileurl !== undefined) updatePayload.fileurl = data.fileurl;
 
         updatePayload.updatedById = currentUser.id;
 
@@ -180,6 +192,17 @@ module.exports = class DocumentsDBApi {
                             'documents',
                             'title',
                             filter.title,
+                        ),
+                    };
+                }
+
+                if (filter.fileurl) {
+                    where = {
+                        ...where,
+                        [Op.and]: Utils.ilike(
+                            'documents',
+                            'fileurl',
+                            filter.fileurl,
                         ),
                     };
                 }

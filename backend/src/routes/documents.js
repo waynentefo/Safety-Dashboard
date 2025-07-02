@@ -20,6 +20,9 @@ const { parse } = require('json2csv');
  *          title:
  *            type: string
  *            default: title
+ *          fileurl:
+ *            type: string
+ *            default: fileurl
 
  *          
  */
@@ -277,7 +280,7 @@ router.get('/', wrapAsync(async (req, res) => {
     req.query, { currentUser }
   );
   if (filetype && filetype === 'csv') {
-    const fields = ['id','title',
+    const fields = ['id','title','fileurl',
 
         ];
     const opts = { fields };

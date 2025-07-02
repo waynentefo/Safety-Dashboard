@@ -38,6 +38,11 @@ document_type: {
 
       },
 
+fileurl: {
+        type: DataTypes.TEXT,
+
+      },
+
       importHash: {
         type: DataTypes.STRING(255),
         allowNull: true,

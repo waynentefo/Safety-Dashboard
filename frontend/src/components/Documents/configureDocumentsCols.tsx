@@ -67,6 +67,19 @@ export const loadColumns = async (
         },
 
         {
+            field: 'fileurl',
+            headerName: 'Fileurl',
+            flex: 1,
+            minWidth: 120,
+            filterable: false,
+            headerClassName: 'datagrid--header',
+            cellClassName: 'datagrid--cell',
+
+            editable: true,
+
+        },
+
+        {
             field: 'actions',
             type: 'actions',
             minWidth: 30,
