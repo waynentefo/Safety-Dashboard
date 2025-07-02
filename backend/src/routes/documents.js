@@ -3,7 +3,6 @@ const express = require('express');
 
 const DocumentsService = require('../services/documents');
 const DocumentsDBApi = require('../db/api/documents');
-const processFile = require('../middlewares/upload');
 const wrapAsync = require('../helpers').wrapAsync;
 
 const router = express.Router();
@@ -21,9 +20,6 @@ const { parse } = require('json2csv');
  *          title:
  *            type: string
  *            default: title
- *          fileurl:
- *            type: string
- *            default: fileurl
 
  *          
  */
@@ -67,27 +63,13 @@ const { parse } = require('json2csv');
 *          description: Invalid input data
 *        500:
 *          description: Some server error
-router.post('/', processFile, wrapAsync(async (req, res) => {
+*/
+router.post('/', wrapAsync(async (req, res) => {
     const referer = req.headers.referer || `${req.protocol}://${req.hostname}${req.originalUrl}`;
     const link = new URL(referer);
-    // Parse data from multipart/form-data or JSON
-    let data = {};
-    if (req.body.data) {
-      data = req.body.data;
-    } else {
-      data = {
-        title: req.body.title,
-        document_type: req.body.document_type,
-      };
-    }
-    // Attach file URL if file was uploaded
-    if (req.file) {
-      data.fileurl = `/uploads/documents/${req.file.filename}`;
-    }
-    await DocumentsService.create(data, req.currentUser, true, link.host);
+    await DocumentsService.create(req.body.data, req.currentUser, true, link.host);
     const payload = true;
     res.status(200).send(payload);
-}));
 }));
 
 /**
@@ -166,24 +148,11 @@ router.post('/bulk-import', wrapAsync(async (req, res) => {
   *              required:
   *                - id
   *      responses:
-router.put('/:id', processFile, wrapAsync(async (req, res) => {
-    // Parse data from multipart/form-data or JSON
-    let data = {};
-    if (req.body.data) {
-      data = req.body.data;
-    } else {
-      data = {
-        title: req.body.title,
-        document_type: req.body.document_type,
-      };
-    }
-    // Attach file URL if file was uploaded
-    if (req.file) {
-      data.fileurl = `/uploads/${req.file.filename}`;
-      data.fileurl = `/uploads/documents/${req.file.filename}`;
-    await DocumentsService.update(data, req.params.id, req.currentUser);
-    res.status(200).send(true);
-}));
+  *        200:
+  *          description: The item data was successfully updated
+  *          content:
+  *            application/json:
+  *              schema:
   *                $ref: "#/components/schemas/Documents"
   *        400:
   *          description: Invalid ID supplied
@@ -194,6 +163,11 @@ router.put('/:id', processFile, wrapAsync(async (req, res) => {
   *        500:
   *          description: Some server error
   */
+router.put('/:id', wrapAsync(async (req, res) => {
+  await DocumentsService.update(req.body.data, req.body.id, req.currentUser);
+  const payload = true;
+  res.status(200).send(payload);
+}));
 
 /**
   * @swagger
@@ -303,7 +277,7 @@ router.get('/', wrapAsync(async (req, res) => {
     req.query, { currentUser }
   );
   if (filetype && filetype === 'csv') {
-    const fields = ['id','title','fileurl',
+    const fields = ['id','title',
 
         ];
     const opts = { fields };

@@ -59,11 +59,6 @@ const DocumentsView = () => {
                     <p>{documents?.document_type ?? 'No data'}</p>
                 </div>
 
-                <div className={'mb-4'}>
-                    <p className={'block font-bold mb-2'}>Fileurl</p>
-                    <p><a href={documents?.fileurl} download>Download</a></p>
-                </div>
-
                 <BaseDivider />
 
                 <BaseButton

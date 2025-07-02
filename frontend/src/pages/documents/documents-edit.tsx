@@ -37,12 +37,8 @@ const EditDocumentsPage = () => {
 
     document_type: '',
 
-    'fileurl': '',
-
   }
   const [initialValues, setInitialValues] = useState(initVals)
-  const [file, setFile] = useState<File | null>(null)
-
 
   const { documents } = useAppSelector((state) => state.documents)
 
@@ -65,13 +61,10 @@ const EditDocumentsPage = () => {
           setInitialValues(newInitialVal);
       }
   }, [documents])
+
   const handleSubmit = async (data) => {
-    const formData = new FormData();
-    formData.append('title', data.title);
-    formData.append('document_type', data.document_type);
-    if (file) formData.append('file', file);
-    await dispatch(update({ id: id, data: formData }));
-    await router.push('/documents/documents-list');
+    await dispatch(update({ id: id, data }))
+    await router.push('/documents/documents-list')
   }
 
   return (
@@ -115,25 +108,6 @@ const EditDocumentsPage = () => {
 
         </Field>
     </FormField>
-
-    <FormField label="File" labelFor="file">
-      {initialValues.fileurl && (
-        <a
-          href={initialValues.fileurl}
-          download
-          className="block mb-2 text-blue-600 hover:underline"
-        >
-          Download current file
-        </a>
-      )}
-      <input
-        id="file"
-        name="file"
-        type="file"
-        onChange={e => setFile(e.currentTarget.files ? e.currentTarget.files[0] : null)}
-      />
-    </FormField>
-    <BaseDivider />
 
               <BaseDivider />
               <BaseButtons>

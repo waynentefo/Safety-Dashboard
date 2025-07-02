@@ -67,8 +67,6 @@ module.exports = class SearchService {
 
                 "title",
 
-                "fileurl",
-
             ],
 
             "inspections": [

@@ -65,24 +65,21 @@ export const deleteItem = createAsyncThunk('documents/deleteDocuments', async (i
     }
 })
 
-export const create = createAsyncThunk('documents/createDocuments', async (payload: any, { rejectWithValue }) => {
+export const create = createAsyncThunk('documents/createDocuments', async (data: any, { rejectWithValue }) => {
     try {
-        let result;
-        if (payload instanceof FormData) {
-            // FormData upload
-            result = await axios.post('documents', payload);
-        } else {
-            // JSON fallback
-            result = await axios.post('documents', { data: payload });
-        }
-        return result.data;
+        const result = await axios.post(
+          'documents',
+          { data }
+        )
+        return result.data
     } catch (error) {
         if (!error.response) {
             throw error;
         }
+
         return rejectWithValue(error.response.data);
     }
-});
+})
 
 export const uploadCsv = createAsyncThunk(
   'documents/uploadCsv',
@@ -111,23 +108,19 @@ export const uploadCsv = createAsyncThunk(
 
 export const update = createAsyncThunk('documents/updateDocuments', async (payload: any, { rejectWithValue }) => {
     try {
-        let result;
-        const { id, data } = payload;
-        if (data instanceof FormData) {
-            // Multipart upload
-            result = await axios.put(`documents/${id}`, data);
-        } else {
-            // JSON fallback
-            result = await axios.put(`documents/${id}`, { id, data });
-        }
-        return result.data;
+        const result = await axios.put(
+          `documents/${payload.id}`,
+          { id: payload.id, data: payload.data }
+        )
+        return result.data
     } catch (error) {
         if (!error.response) {
             throw error;
         }
+
         return rejectWithValue(error.response.data);
     }
-});
+})
 
 export const documentsSlice = createSlice({
     name: 'documents',

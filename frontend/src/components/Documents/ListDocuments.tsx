@@ -50,11 +50,6 @@ const ListDocuments = ({ documents, loading, onDelete, currentPage, numPages, on
                                 <p className={'line-clamp-2'}>{ item.file }</p>
                             </div>
 
-                            <div className={'flex-1 px-3'}>
-                                <p className={'text-xs text-gray-500'}>Fileurl</p>
-                                <p className={'line-clamp-2'}>{ item.fileurl }</p>
-                            </div>
-
                           </Link>
                             <ListActionsPopover
                               onDelete={onDelete}
