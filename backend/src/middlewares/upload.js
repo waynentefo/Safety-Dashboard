@@ -6,7 +6,7 @@ const fs = require('fs');
 const maxSize = 10 * 1024 * 1024;
 
 // Ensure uploads directory exists
-const uploadDir = path.join(__dirname, '../../uploads');
+const uploadDir = path.join(__dirname, '../../uploads/documents');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }

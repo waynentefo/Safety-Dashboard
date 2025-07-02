@@ -82,7 +82,7 @@ router.post('/', processFile, wrapAsync(async (req, res) => {
     }
     // Attach file URL if file was uploaded
     if (req.file) {
-      data.fileurl = `/uploads/${req.file.filename}`;
+      data.fileurl = `/uploads/documents/${req.file.filename}`;
     }
     await DocumentsService.create(data, req.currentUser, true, link.host);
     const payload = true;
@@ -180,7 +180,7 @@ router.put('/:id', processFile, wrapAsync(async (req, res) => {
     // Attach file URL if file was uploaded
     if (req.file) {
       data.fileurl = `/uploads/${req.file.filename}`;
-    }
+      data.fileurl = `/uploads/documents/${req.file.filename}`;
     await DocumentsService.update(data, req.params.id, req.currentUser);
     res.status(200).send(true);
 }));
@@ -194,11 +194,6 @@ router.put('/:id', processFile, wrapAsync(async (req, res) => {
   *        500:
   *          description: Some server error
   */
-router.put('/:id', wrapAsync(async (req, res) => {
-  await DocumentsService.update(req.body.data, req.body.id, req.currentUser);
-  const payload = true;
-  res.status(200).send(payload);
-}));
 
 /**
   * @swagger

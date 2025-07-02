@@ -1,6 +1,4 @@
-import { mdiChartTimelineVariant } from '@mdi/js'
-import Head from 'next/head'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react';
 import CardBox from '../../components/CardBox'
 import LayoutAuthenticated from '../../layouts/Authenticated'
 import SectionMain from '../../components/SectionMain'
@@ -36,11 +34,19 @@ const initialValues = {
 const DocumentsNew = () => {
   const router = useRouter()
   const dispatch = useAppDispatch()
+  const [file, setFile] = useState<File | null>(null)
 
-  const handleSubmit = async (data) => {
-    await dispatch(create(data))
-    await router.push('/documents/documents-list')
+
+const handleSubmit = async (data) => {
+  const formData = new FormData();
+  formData.append('title', data.title);
+  formData.append('document_type', data.document_type);
+  if (file) {
+    formData.append('file', file);
   }
+  await dispatch(create(formData));
+  await router.push('/documents/documents-list');
+}
   return (
     <>
       <Head>
@@ -82,15 +88,16 @@ const DocumentsNew = () => {
         <option value="Plan">Plan</option>
 
       </Field>
+  <FormField label="File" labelFor="file">
+    <input
+      id="file"
+      name="file"
+      type="file"
+      onChange={e => setFile(e.currentTarget.files ? e.currentTarget.files[0] : null)}
+    />
   </FormField>
 
-  <FormField
-      label="Fileurl"
-  >
-      <Field
-          name="fileurl"
-          placeholder="Fileurl"
-      />
+  <BaseDivider />
   </FormField>
 
               <BaseDivider />

@@ -65,18 +65,20 @@ export const loadColumns = async (
             editable: true,
 
         },
-
         {
             field: 'fileurl',
-            headerName: 'Fileurl',
+            headerName: 'File',
             flex: 1,
             minWidth: 120,
             filterable: false,
             headerClassName: 'datagrid--header',
             cellClassName: 'datagrid--cell',
-
-            editable: true,
-
+            renderCell: (params: GridValueGetterParams) =>
+                params.value ? (
+                    <a href={params.value as string} download>
+                        Download
+                    </a>
+                ) : null,
         },
 
         {

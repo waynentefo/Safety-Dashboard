@@ -61,7 +61,7 @@ const DocumentsView = () => {
 
                 <div className={'mb-4'}>
                     <p className={'block font-bold mb-2'}>Fileurl</p>
-                    <p>{documents?.fileurl}</p>
+                    <p><a href={documents?.fileurl} download>Download</a></p>
                 </div>
 
                 <BaseDivider />
