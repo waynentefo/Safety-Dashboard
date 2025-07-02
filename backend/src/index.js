@@ -79,6 +79,8 @@ require('./auth/auth');
 
 app.use(bodyParser.json());
 
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 app.use('/api/auth', authRoutes);
 app.enable('trust proxy');
 
